@@ -1,0 +1,109 @@
+schemaVersion: 3
+meta:
+  sourceVersionId: 4fa66c4c-89e6-4a8f-88f5-5dee9780afbd # DO NOT CHANGE - Hex uses this to match up project versions when reimporting the file
+  description: null
+  projectId: 7af83295-162a-4402-9637-751deee6bcd1 # DO NOT CHANGE - Unique ID of the project from which this file was generated
+  title: ML/OPS
+  timezone: null
+  appTheme: SYS_PREF
+  codeLanguage: PYTHON
+  status:
+    name: Exploratory
+  categories: []
+  castDecimalsDefault: true
+  logicQueryCacheTimeout: null
+  publishedQueryCacheTimeout: null
+  hexType: PROJECT
+projectAssets:
+  dataConnections: []
+  envVars: []
+  secrets: []
+sharedAssets:
+  secrets: []
+  vcsPackages:
+    - vcsPackageId: 955fcec5-ea6d-4328-9889-df8b055362f6 # manthankumar12/mlops_demo
+  dataConnections: []
+  externalFileIntegrations: []
+cells:
+  - cellType: CODE
+    cellId: e1784fb6-79e5-464a-a7b6-2553e1ec45e8 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: Snowflake Data Fetch
+    config:
+      source: |-
+        import snowflake.connector
+        import pandas as pd
+        from snowflake.connector import DictCursor
+
+        conn = snowflake.connector.connect(
+            user="manthankumar",
+            password="Ranamkr@1201",
+            account="tq06422.ca-central-1.aws",
+            role="ACCOUNTADMIN",
+            warehouse="COMPUTE_wh",
+            database="snowlens",
+            schema="PUBLIC",
+        )
+        cur = conn.cursor(DictCursor)
+
+        query = 'select * from "QUERY_HISTORY_TABLE"'
+        cur.execute(query)
+        data_fetch = cur.fetchall()
+        df = pd.DataFrame(data_fetch)
+        print(df)
+
+        cur.close()
+        conn.close()
+  - cellType: CODE
+    cellId: 9bc34b62-fc9e-40fc-84d2-962c862e3b3c # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |-
+        import snowflake.connector
+        import pandas as pd
+        from snowflake.connector import DictCursor
+
+        conn = snowflake.connector.connect(
+            user="manthankumar",
+            password="Ranamkr@1201",
+            account="tq06422.ca-central-1.aws",
+            role="ACCOUNTADMIN",
+            warehouse="COMPUTE_wh",
+            database="snowlens",
+            schema="PUBLIC",
+        )
+        cur = conn.cursor(DictCursor)
+
+        query = 'select * from "QUERY_HISTORY_TABLE"'
+        cur.execute(query)
+        data_fetch = cur.fetchall()
+        df = pd.DataFrame(data_fetch)
+        print(df)
+
+        cur.close()
+        conn.close()
+appLayout:
+  visibleMetadataFields:
+    - NAME
+    - DESCRIPTION
+    - AUTHOR
+    - LAST_EDITED
+    - LAST_RUN
+    - CATEGORIES
+    - STATUS
+    - TABLE_OF_CONTENTS
+  fullWidth: false
+  tabs:
+    - name: Tab 1
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 9bc34b62-fc9e-40fc-84d2-962c862e3b3c
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+sharedFilters: []
