@@ -10,7 +10,9 @@ import json
 def hello(session: Session) -> DataFrame:
     df = session.sql('select * from "QUERY_HISTORY_TABLE"')
     df1 = df.collect()
-    return df1
+    df1.write.save_as_table("my_table" , mode="overwrite" , table_type = "temporary")
+    df2 = session.table("my_table").collect()
+    return df2
  
 # For local debugging
 if __name__ == "__main__":
