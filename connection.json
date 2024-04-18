@@ -1,0 +1,9 @@
+{
+    "user": "manthan.kumar@progressresidential.com",
+    "password": "Ranamkr@1201",
+    "account": "tq06422.ca-central-1.aws",
+    "role":"ACCOUNTADMIN",
+    "warehouse":"COMPUTE_WH",
+    "database":"SNOWLENS",
+    "schema":"PUBLIC"
+}
