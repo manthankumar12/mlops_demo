@@ -9,7 +9,7 @@ import json
  
 def hello(session: Session) -> DataFrame:
     query = 'select * from "QUERY_HISTORY_TABLE"'
-    result = session.execute_query(query)
+    result = session.execute(query)
     df = pd.DataFrame(result.to_pandas())
     return df
  
