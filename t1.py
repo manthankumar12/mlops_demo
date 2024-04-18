@@ -8,9 +8,8 @@ from snowflake.snowpark.functions import col
 import json
  
 def hello(session: Session) -> DataFrame:
-    query = 'select * from "QUERY_HISTORY_TABLE"'
-    result = session.execute(query)
-    df = pd.DataFrame(result.to_pandas())
+    cur = session.execute('select * from "QUERY_HISTORY_TABLE"')
+    df = pd.DataFrame(cur.fetchall(), columns=[x[0] for x in cur.description])
     return df
  
 # For local debugging
