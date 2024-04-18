@@ -8,11 +8,8 @@ from snowflake.snowpark.functions import col
 import json
  
 def hello(session: Session) -> DataFrame:
-    df = session.sql('select * from "QUERY_HISTORY_TABLE"')
-    df1 = df.collect()
-    df1.write.save_as_table("my_table" , mode="overwrite" , table_type = "temporary")
-    df2 = session.table("my_table").collect()
-    return df2
+    df = session.table("SNOWLENS.PUBLIC.QUERY_HISTORY_TABLE")
+    return df
  
 # For local debugging
 if __name__ == "__main__":
