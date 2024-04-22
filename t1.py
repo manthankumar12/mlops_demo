@@ -8,7 +8,7 @@ from snowflake.snowpark.functions import col
 import json
  
 def hello(session: Session) -> DataFrame:
-    df = session.table("SNOWLENS.PUBLIC.QUERY_HISTORY_TABLE")
+    df = session.table("SNOWLENS.DEMO.QUERY_HISTORY_TABLE")
     return df
  
 # For local debugging
