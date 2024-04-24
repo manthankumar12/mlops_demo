@@ -1,9 +1,8 @@
 {
-    "account": "rentprogress",
-    "user": "manthan.kumar@progressresidential.com",
-    "authenticator": "externalbrowser",
-    "role":"INTERN_OPS_DATA_ANALYSIS",
-    "warehouse":"ADHOC_WH",
+    "account": "ls31517.ap-southeast-1",
+    "user": "manthan",
+    "password": "Manthanrana123",
+    "role":"ACCOUNTADMIN",
+    "warehouse":"COMPUTE_WH",
     "database":"SNOWLENS",
-    "schema":"DEMO"
 }
