@@ -25,11 +25,11 @@ jobs:
       - name: Extract Source Code
         run: |
           python extract_source_code.py
+          git add output.py
 
       - name: Commit and Push Changes
         run: |
           git config --local user.email "manthan.kumar@progressresidential.com"
           git config --local user.name "manthankumar12"
-          git add output.py
           git commit -m "Extracted source code from YAML"
           git push
