@@ -8,7 +8,7 @@ jobs:
   extract_and_convert:
     runs-on: ubuntu-latest
     env:
-      SF_TOKEN: ${{ secrets.SF_TOKEN }}
+      TOKEN: ${{ secrets.TOKEN }}
 
  
     steps:
