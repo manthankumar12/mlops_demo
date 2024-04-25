@@ -8,8 +8,7 @@ jobs:
   extract_and_convert:
     runs-on: ubuntu-latest
     env:
-      TOKEN: ${{ secrets.TOKEN }}
-
+      GH_PAT: ${{ secrets.GH_PAT }}
  
     steps:
       - name: Checkout Repository
@@ -26,11 +25,15 @@ jobs:
       
       - name: Create Python File
         run: ./hex/create_python_file.sh
- 
-      - name: Commit and Push Changes
+
+      - name: Configure Git
         run: |
           git config --local user.email "manthan.kumar@progressresidential.com"
           git config --local user.name "manthankumar12"
+          git remote set-url origin "https://manthankumar12:${GH_PAT}@github.com/manthankumar12/mlops_demo.git"
+
+      - name: Commit and Push Changes
+        run: |
           git add .
           git commit -m "Auto-generated Python file"
           git push
