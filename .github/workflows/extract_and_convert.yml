@@ -1,39 +1,35 @@
+name: Extract Source Code
+
 on:
   push:
     paths:
-      - 'hex/**'
+      - 'hex/**'  # Specify the path to your YAML file
   workflow_dispatch:
- 
+
 jobs:
-  extract_and_convert:
+  extract_source_code:
     runs-on: ubuntu-latest
-    env:
-      TOKEN: ${{ secrets.TOKEN }}
- 
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
- 
-      - name: Grant execute permissions to the script
-        run: chmod +x hex/extract_source_code.sh
 
-      - name: Extract source code from YAML
-        run: ./hex/extract_source_code.sh
-        
-      - name: Grant execute permissions to the script
-        run: chmod +x hex/create_python_file.sh
-      
-      - name: Create Python File
-        run: ./hex/create_python_file.sh
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Use Python 3.x
 
-      - name: Configure Git
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Extract Source Code
         run: |
-          git config --local user.email "manthan.kumar@progressresidential.com"
-          git config --local user.name "manthankumar12"
-          git remote set-url origin "https://manthankumar12:${GH_PAT}@github.com/manthankumar12/mlops_demo.git"
+          python extract_source_code.py
 
       - name: Commit and Push Changes
         run: |
-          git add .
-          git commit -m "Auto-generated Python file"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions"
+          git add output.py
+          git commit -m "Extracted source code from YAML"
           git push
