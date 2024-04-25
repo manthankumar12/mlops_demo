@@ -1,0 +1,15 @@
+on:
+  push:
+    paths:
+      - '**.yml'
+ 
+jobs:
+  extract_and_convert:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+ 
+      - name: Extract Source Code
+        run: ./extract_source_code.sh
