@@ -7,6 +7,9 @@ on:
 jobs:
   extract_and_convert:
     runs-on: ubuntu-latest
+    env:
+      SF_TOKEN: ${{ secrets.SF_TOKEN }}
+
  
     steps:
       - name: Checkout Repository
