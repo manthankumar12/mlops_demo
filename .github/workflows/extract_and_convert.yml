@@ -13,3 +13,14 @@ jobs:
  
       - name: Extract Source Code
         run: ./extract_source_code.sh
+ 
+      - name: Create Python File
+        run: ./create_python_file.sh
+ 
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Auto-generated Python file"
+          git push
