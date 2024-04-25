@@ -8,7 +8,7 @@ jobs:
   extract_and_convert:
     runs-on: ubuntu-latest
     env:
-      GH_PAT: ${{ secrets.GH_PAT }}
+      TOKEN: ${{ secrets.TOKEN }}
  
     steps:
       - name: Checkout Repository
