@@ -2,6 +2,7 @@ on:
   push:
     paths:
       - 'hex/**'
+  workflow_dispatch:
  
 jobs:
   extract_and_convert:
@@ -16,6 +17,12 @@ jobs:
 
       - name: Extract source code from YAML
         run: ./hex/extract_source_code.sh
+        
+      - name: Grant execute permissions to the script
+        run: chmod +x hex/create_python_file.sh
+      
+      - name: Create Python File
+        run: ./hex/create_python_file.sh
  
       - name: Commit and Push Changes
         run: |
