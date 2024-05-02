@@ -28,7 +28,7 @@ CREATE OR REPLACE PROCEDURE EXECUTE_PYTHON_SCRIPT()
     var result = stmt.execute();
     return 'Script executed successfully.';
   $$;
-"""
+""".format(github_repo_url=github_repo_url)
 
 try:
     # Connect to Snowflake
