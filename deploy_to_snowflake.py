@@ -1,17 +1,18 @@
 import snowflake.connector
 import requests
+import os
 
 # Snowflake connection parameters
-snowflake_account = 'ls31517.ap-southeast-1'
-snowflake_user = 'manthan'
-snowflake_password = 'Manthanrana123'
-snowflake_role = 'ACCOUNTADMIN'
-snowflake_database = 'SNOWLENS'
-snowflake_schema = 'DEMO'
-snowflake_warehouse = 'COMPUTE_WH'
+snowflake_account = os.environ.get('ls31517.ap-southeast-1')
+snowflake_user = os.environ.get('manthan')
+snowflake_password = os.environ.get('Manthanrana123')
+snowflake_role = os.environ.get('Manthanrana123')
+snowflake_database = os.environ.get('SNOWLENS')
+snowflake_schema = os.environ.get('DEMO')
+snowflake_warehouse = os.environ.get('COMPUTE_WH')
 
 # GitHub repository URL
-github_repo_url = 'https://github.com/manthankumar12/mlops_demo/blob/main/output.py'
+github_repo_url = os.environ.get('https://github.com/manthankumar12/mlops_demo/blob/main/output.py')
 
 # Snowflake SQL to execute the Python script
 snowflake_sql = """
@@ -21,14 +22,14 @@ CREATE OR REPLACE PROCEDURE EXECUTE_PYTHON_SCRIPT()
   EXECUTE AS CALLER
   AS
   $$
-    var pythonScriptURL = '{github_repo_url}';
+    var pythonScriptURL = '{}';
     var response = httpClient.get(pythonScriptURL);
     var pythonScript = response.body;
     var stmt = snowflake.createStatement({sqlText: pythonScript});
     var result = stmt.execute();
     return 'Script executed successfully.';
   $$;
-""".format(github_repo_url=github_repo_url)
+""".format(github_repo_url)
 
 try:
     # Connect to Snowflake
@@ -36,7 +37,6 @@ try:
         user=snowflake_user,
         password=snowflake_password,
         account=snowflake_account,
-        role=snowflake_role,
         warehouse=snowflake_warehouse,
         database=snowflake_database,
         schema=snowflake_schema
@@ -46,7 +46,7 @@ try:
     cursor = conn.cursor()
 
     # Execute the Snowflake SQL to create the procedure
-    cursor.execute(snowflake_sql.format(github_repo_url=github_repo_url))
+    cursor.execute(snowflake_sql)
 
     # Call the procedure to execute the Python script
     cursor.execute("CALL EXECUTE_PYTHON_SCRIPT()")
@@ -61,3 +61,4 @@ try:
 
 except snowflake.connector.errors.ProgrammingError as e:
     print("Error:", e)
+
