@@ -42,5 +42,5 @@ jobs:
           SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
           SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          GITHUB_REPO_URL: 'https://raw.githubusercontent.com/username/repository/branch/script.py'  
+          GITHUB_REPO_URL: 'https://github.com/manthankumar12/mlops_demo/blob/main/output.py'  
         run: python deploy_to_snowflake.py
