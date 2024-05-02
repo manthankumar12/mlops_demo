@@ -18,13 +18,17 @@ def extract_source_code(yaml_file_path):
 
 def save_source_code(source_code, output_dir):
     try:
-        # Create the output directory if it doesnt exist
-        os.makedirs(output_dir, exist_ok=True)
-        
         # Generate a unique output file name using timestamp
         timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
         output_file_name = f"output_{timestamp}.py"
-        output_file_path = os.path.join(output_dir, output_file_name)
+        
+        if output_dir:
+            # If output_dir is not empty, save the file in the specified directory
+            os.makedirs(output_dir, exist_ok=True)
+            output_file_path = os.path.join(output_dir, output_file_name)
+        else:
+            # If output_dir is empty, save the file in the current working directory
+            output_file_path = output_file_name
 
         # Save the source code to the output file
         with open(output_file_path, 'w') as file:
@@ -34,7 +38,6 @@ def save_source_code(source_code, output_dir):
     except Exception as e:
         print(f"Error occurred while saving source code: {str(e)}")
         return None
-
 def main():
     yaml_file_path = 'hex/mlops.yaml'  # Replace with the path to your YAML file
     output_dir = ''  # Output directory path
