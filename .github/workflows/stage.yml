@@ -1,4 +1,4 @@
-name: Add Python file to Snowflake Stage
+name: Deploy Python File to Snowflake
 
 on:
   push:
@@ -6,35 +6,39 @@ on:
       - main  # Adjust branch name if needed
 
 jobs:
-  build:
+  deploy_to_snowflake:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install SnowSQL
+      - name: Download Python File
+        run: wget https://github.com/manthankumar12/mlops_demo/blob/main/output.py -O python_file.py
+
+      - name: Install Snowpark Dependencies
         run: |
-          curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.9-linux_x86_64.bash
-          SNOWSQL_DEST=~/bin SNOWSQL_LOGIN_SHELL=~/.profile bash snowsql-1.2.9-linux_x86_64.bash
-          
-      - name: Set up Snowflake Connection Parameters
+          curl -Lo /tmp/snowpark.jar https://repo1.maven.org/maven2/net/snowflake/snowpark_2.12/0.10.1/snowpark_2.12-0.10.1.jar
+          curl -Lo /tmp/snowpark-assembly.jar https://repo1.maven.org/maven2/net/snowflake/snowpark-sql_2.12/0.10.1/snowpark-sql_2.12-0.10.1-assembly.jar
+
+      - name: Set up Snowflake Credentials
+        run: |
+          echo "export SNOWFLAKE_ACCOUNT='ls31517.ap-southeast-1'" >> $GITHUB_ENV
+          echo "export SNOWFLAKE_USER='manthan'" >> $GITHUB_ENV
+          echo "export SNOWFLAKE_PASSWORD='Manthanrana123'" >> $GITHUB_ENV
+          echo "export SNOWFLAKE_WAREHOUSE='COMPUTE_WH'" >> $GITHUB_ENV
+          echo "export SNOWFLAKE_DATABASE='SNOWLENS'" >> $GITHUB_ENV
+          echo "export SNOWFLAKE_SCHEMA='DEMO'" >> $GITHUB_ENV
+          echo "export SNOWFLAKE_ROLE='ACCOUNTADMIN'" >> $GITHUB_ENV
+
+      - name: Deploy Python File to Snowflake
+        run: |
+          java -cp /tmp/snowpark.jar:/tmp/snowpark-assembly.jar com.snowflake.snowpark.SnowparkScriptRunner https://github.com/manthankumar12/mlops_demo/blob/main/output.py
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
-          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
           SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
           SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
-        run: snowsql -a $SNOWFLAKE_ACCOUNT -u $SNOWFLAKE_USER -p $SNOWFLAKE_PASSWORD -r $SNOWFLAKE_ROLE -w $SNOWFLAKE_WAREHOUSE -d $SNOWFLAKE_DATABASE -s $SNOWFLAKE_SCHEMA -q 
-
-      - name: Upload Python File to Snowflake Stage
-        uses: actions/upload-artifact@v2
-        with:
-          name: python_script
-          path: https://github.com/manthankumar12/mlops_demo/blob/main/output7.py
-
-      - name: Upload Python script to Snowflake stage
-        run: |
-          ~/bin/snowsql -q "put file://$(pwd)/output7.py @my_stage overwrite=true" -o friendly=false
+          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
