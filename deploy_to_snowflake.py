@@ -20,6 +20,7 @@ try:
         user=snowflake_user,
         password=snowflake_password,
         account=snowflake_account,
+        role=snowflake_role,
         warehouse=snowflake_warehouse,
         database=snowflake_database,
         schema=snowflake_schema
