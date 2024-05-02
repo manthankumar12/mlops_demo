@@ -25,16 +25,18 @@ jobs:
       - name: Install Snowflake Connector
         run: pip install snowflake-connector-python
 
+      - name: Generate Unique Output File Name
+        id: generate_filename
+        run: echo "::set-output name=filename::output_$(date +%Y%m%d%H%M%S)_$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 6).py"
 
       - name: Extract Source Code
-        run: |
-          python extract_source_code.py
-          git add output7.py
+        run: python extract_source_code.py
 
       - name: Commit and Push Changes
         run: |
           git config --local user.email "manthan.kumar@progressresidential.com"
           git config --local user.name "manthankumar12"
+          git add "${{ steps.generate_filename.outputs.filename }}"
           git commit -m "Extracted source code from YAML"
           git push
           
@@ -46,5 +48,5 @@ jobs:
           SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
           SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          GITHUB_REPO_URL: 'https://github.com/manthankumar12/mlops_demo/blob/main/output.py'  
+          GITHUB_REPO_URL: "https://github.com/manthankumar12/mlops_demo/blob/main/${{ steps.generate_filename.outputs.filename }}"  
         run: python deploy_to_snowflake.py
