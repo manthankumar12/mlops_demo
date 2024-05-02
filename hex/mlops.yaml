@@ -33,13 +33,13 @@ cells:
         from snowflake.connector import DictCursor
 
         conn = snowflake.connector.connect(
-            user="manthankumar",
-            password="Ranamkr@1201",
-            account="tq06422.ca-central-1.aws",
+            user="manthan",
+            password="Manthanrana123",
+            account="ls31517.ap-southeast-1",
             role="ACCOUNTADMIN",
-            warehouse="COMPUTE_wh",
-            database="snowlens",
-            schema="PUBLIC",
+            warehouse="COMPUTE_WH",
+            database="SNOWLENS",
+            schema="DEMO",
         )
         cur = conn.cursor(DictCursor)
 
