@@ -44,13 +44,4 @@ jobs:
           git commit -m "Extracted source code from YAML"
           git push
           
-      - name: Run Deployment Script
-        env:
-          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
-          SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
-          SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
-          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          GITHUB_REPO_URL: ${{ github.repository }}/blob/main/${{ steps.save_source_code.outputs.saved_file_path }}  
-        run: python deploy_to_snowflake.py
+    
