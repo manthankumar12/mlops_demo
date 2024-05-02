@@ -1,4 +1,6 @@
 import yaml
+import os
+import datetime
 
 def extract_source_code(yaml_file_path):
     try:
@@ -14,7 +16,7 @@ def extract_source_code(yaml_file_path):
         print(f"Error occurred while extracting source code: {str(e)}")
         return None
 
-def save_source_code(source_code, output_file_path):
+def save_source_code(source_code, output_dir):
     try:
         # Create the output directory if it doesnt exist
         os.makedirs(output_dir, exist_ok=True)
