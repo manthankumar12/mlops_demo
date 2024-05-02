@@ -29,7 +29,7 @@ jobs:
       - name: Extract Source Code
         run: |
           python extract_source_code.py
-          git add output3.py
+          git add output4.py
 
       - name: Commit and Push Changes
         run: |
