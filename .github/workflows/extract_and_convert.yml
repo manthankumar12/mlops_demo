@@ -52,5 +52,5 @@ jobs:
           SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
           SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          GITHUB_REPO_URL: ${{ github.repository }}/blob/main/${{ steps.save_source_code.outputs.saved_file_path }}  
+          GITHUB_REPO_URL: ${{ github.repository }}/blob/main/${{ saved_file_path }}  
         run: python deploy_to_snowflake.py
