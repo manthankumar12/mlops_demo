@@ -22,10 +22,14 @@ jobs:
       - name: Install PyYAML
         run: pip install pyyaml
 
+      - name: Install Snowflake Connector
+        run: pip install snowflake-connector-python
+
+
       - name: Extract Source Code
         run: |
           python extract_source_code.py
-          git add output1.py
+          git add output2.py
 
       - name: Commit and Push Changes
         run: |
