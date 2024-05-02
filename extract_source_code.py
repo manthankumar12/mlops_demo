@@ -25,7 +25,7 @@ def save_source_code(source_code, output_file_path):
 
 def main():
     yaml_file_path = 'hex/mlops.yaml'  # Replace with the path to your YAML file
-    output_file_path = 'output6.py'  # Output file path
+    output_file_path = 'output7.py'  # Output file path
 
     # Extract source code from YAML
     source_code = extract_source_code(yaml_file_path)
