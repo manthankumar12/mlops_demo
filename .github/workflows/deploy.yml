@@ -1,9 +1,9 @@
-name: Deploy to Snowflake
+name: Deploy to Snowpark Snowflake
 
 on:
   push:
     branches:
-      - main
+      - main 
   workflow_dispatch:
 
 jobs:
@@ -13,21 +13,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install snowflake-snowpark-python
 
-      - name: Install Snowpark
-        run: |
-           pip install snowflake-snowpark-python
-
-      - name: Run Python script
+      - name: Deploy to Snowpark Snowflake
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
           SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+          SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-        run: output_20240503073659.py
+        run: |
+          python -m snowflake.snowpark \
+            --account ${SNOWFLAKE_ACCOUNT} \
+            --user ${SNOWFLAKE_USER} \
+            --password ${SNOWFLAKE_PASSWORD} \
+            --database ${SNOWFLAKE_DATABASE} \
+            --schema ${SNOWFLAKE_SCHEMA} \
+            --warehouse ${SNOWFLAKE_WAREHOUSE} \
+            --deploy output_20240503073659.py
