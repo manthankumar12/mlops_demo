@@ -1,10 +1,9 @@
-name: Deploy to Snowpark Snowflake
+name: Deploy to Snowflake
 
 on:
   push:
-    paths:
-      - '**/*.py'  # Trigger on push to any.py file
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
   deploy:
@@ -13,25 +12,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: pip install snowflake-snowpark-python
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
-      - name: Deploy to Snowpark Snowflake
+      - name: Install Snowpark
+        run: |
+          curl -O https://repo1.maven.org/maven2/com/snowflake/snowpark/spark-3.0.1/spark-3.0.1-snowpark-shaded.jar
+          pip install snowpark
+
+      - name: Run Python script
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
           SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
-          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
           SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
-          SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-        run: |
-          python -m snowflake.snowpark \
-            --account ${SNOWFLAKE_ACCOUNT} \
-            --user ${SNOWFLAKE_USER} \
-            --password ${SNOWFLAKE_PASSWORD} \
-            --role ${SNOWFLAKE_ROLE} \
-            --database ${SNOWFLAKE_DATABASE} \
-            --schema ${SNOWFLAKE_SCHEMA} \
-            --warehouse ${SNOWFLAKE_WAREHOUSE} \
-            --deploy output_20240503073659.py
+          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+        run: output_20240503073659.py
