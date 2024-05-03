@@ -32,7 +32,7 @@ jobs:
           output_dir=""
           saved_file_path=$(python extract_source_code.py ${{ github.workspace }}/hex/mlops.yaml $output_dir)
           echo "::set-output name=saved_file_path::$saved_file_path"
-          echo "::set-output name=saved_file_path::$steps.saved_source_code.outputs.saved_file_path"
+          echo "$steps.saved_source_code.outputs.saved_file_path"
           
         
       - name: Commit and Push Changes
