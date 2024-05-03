@@ -39,6 +39,6 @@ jobs:
           git config --local user.email "manthan.kumar@progressresidential.com"
           git config --local user.name "manthankumar12"
           cd ${{ github.workspace }} # Change directory to where the file is saved
-          git add "${{ steps.save_source_code.saved_file_path }}"
+          git add .
           git commit -m "Extracted source code from YAML"
           git push
