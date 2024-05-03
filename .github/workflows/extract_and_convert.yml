@@ -33,6 +33,9 @@ jobs:
           saved_file_path=$(python extract_source_code.py ${{ github.workspace }}/hex/mlops.yaml $output_dir)
           echo "::set-output name=saved_file_path::$saved_file_path"
 
+      - name: Print saved_file_path
+        run: echo "Saved file path: ${{ steps.save_source_code.outputs.saved_file_path }}"
+        
       - name: Commit and Push Changes
         run: |
           git config --local user.email "manthan.kumar@progressresidential.com"
