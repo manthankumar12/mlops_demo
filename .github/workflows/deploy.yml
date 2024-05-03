@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '**/*.py'  # Trigger on push to any.py file
+  workflow_dispatch:
 
 jobs:
   deploy:
