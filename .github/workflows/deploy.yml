@@ -19,8 +19,7 @@ jobs:
 
       - name: Install Snowpark
         run: |
-          curl -O https://repo1.maven.org/maven2/com/snowflake/snowpark/spark-3.0.1/spark-3.0.1-snowpark-shaded.jar
-          pip install snowpark
+           pip install snowflake-snowpark-python
 
       - name: Run Python script
         env:
