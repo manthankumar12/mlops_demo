@@ -11,3 +11,4 @@ dependencies:
   - pip:
       - "-r requirements.txt"
       - "--editable ."
+ 
