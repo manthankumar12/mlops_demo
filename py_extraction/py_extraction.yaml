@@ -1,0 +1,136 @@
+schemaVersion: 3
+meta:
+  sourceVersionId: 32294bb3-5ab4-473b-8980-e95f77a80c13 # DO NOT CHANGE - Hex uses this to match up project versions when reimporting the file
+  description: null
+  projectId: 1a26096c-6bba-4320-b949-f45f626676e8 # DO NOT CHANGE - Unique ID of the project from which this file was generated
+  title: py_extraction
+  timezone: null
+  appTheme: SYS_PREF
+  codeLanguage: PYTHON
+  status: null
+  categories: []
+  castDecimalsDefault: true
+  logicQueryCacheTimeout: null
+  publishedQueryCacheTimeout: null
+  hexType: PROJECT
+  allowExecutionReordering: true
+  prerunApp: false
+  cachePublishedAppState: true
+  refreshStalePublishedApp: false
+  autoRerunApp: true
+projectAssets:
+  dataConnections: []
+  envVars: []
+  secrets: []
+sharedAssets:
+  secrets: []
+  vcsPackages: []
+  dataConnections: []
+  externalFileIntegrations: []
+cells:
+  - cellType: CODE
+    cellId: bca6fd2b-b333-4db6-8902-7a2af974e94b # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |
+        import snowflake.connector
+        import pandas as pd
+        from snowflake.connector import DictCursor
+        from snowflake.snowpark.session import Session 
+        from snowflake.snowpark import DataFrame 
+        from snowflake.snowpark.functions import col
+
+        def hello(session: Session) -> DataFrame:
+            df = session.table("SNOWLENS.DEMO.QUERY_HISTORY_TABLE")
+            return df
+
+        # Define connection parameters
+        connection_params = {
+            "ACCOUNT": "ls31517.ap-southeast-1",
+            "USER": "manthan",
+            "PASSWORD": "Manthanrana123",
+            "ROLE": "ACCOUNTADMIN",
+            "WAREHOUSE": "COMPUTE_WH",
+            "DATABASE": "SNOWLENS",
+            "SCHEMA": "DEMO"
+        }
+
+        # Create a Snowpark session using the defined connection parameters
+        session = Session.builder.configs(connection_params).create()
+
+        # Fetch the table and display it
+        print(hello(session).show())
+  - cellType: CODE
+    cellId: d4aea27d-9560-4030-93ec-13dadb2c81a6 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: |
+        import snowflake.connector
+        import pandas as pd
+        from snowflake.connector import DictCursor
+        from snowflake.snowpark.session import Session 
+        from snowflake.snowpark import DataFrame 
+        from snowflake.snowpark.functions import col
+
+        def hello(session: Session) -> DataFrame:
+            df = session.table("SNOWLENS.DEMO.QUERY_HISTORY_TABLE")
+            return df
+
+        # Define connection parameters
+        connection_params = {
+            "ACCOUNT": "ls31517.ap-southeast-1",
+            "USER": "manthan",
+            "PASSWORD": "Manthanrana123",
+            "ROLE": "ACCOUNTADMIN",
+            "WAREHOUSE": "COMPUTE_WH",
+            "DATABASE": "SNOWLENS",
+            "SCHEMA": "DEMO"
+        }
+
+        # Create a Snowpark session using the defined connection parameters
+        session = Session.builder.configs(connection_params).create()
+
+        # Fetch the table and display it
+        print(hello(session).show())
+  - cellType: CODE
+    cellId: 7fce33c8-6f61-4ebb-be02-b593ef478c80 # DO NOT CHANGE - Hex uses this to match up cells when reimporting the file, and detect any changes to existing cells
+    cellLabel: null
+    config:
+      source: ""
+appLayout:
+  visibleMetadataFields:
+    - NAME
+    - DESCRIPTION
+    - AUTHOR
+    - LAST_EDITED
+    - LAST_RUN
+    - CATEGORIES
+    - STATUS
+    - TABLE_OF_CONTENTS
+  fullWidth: false
+  tabs:
+    - name: Tab 1
+      rows:
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: d4aea27d-9560-4030-93ec-13dadb2c81a6
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+        - columns:
+            - start: 0
+              end: 120
+              elements:
+                - showSource: false
+                  hideOutput: false
+                  type: CELL
+                  cellId: 7fce33c8-6f61-4ebb-be02-b593ef478c80
+                  sharedFilterId: null
+                  height: null
+                  showLabel: true
+sharedFilters: []
