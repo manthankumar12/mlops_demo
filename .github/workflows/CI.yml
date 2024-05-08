@@ -36,6 +36,9 @@ jobs:
           curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.9-linux_x86_64.bash
           SNOWSQL_DEST=~/bin SNOWSQL_LOGIN_SHELL=~/.profile bash snowsql-1.2.9-linux_x86_64.bash
 
+      - name: Install Snowflake-connector
+        run: pip install snowflake-connector-python
+
       - name: Upload artifact to SnowSQL
         run: |
           ~/bin/snowsql -q 'put file://'$(pwd)'/t1.py @~/${{ github.ref_name }} overwrite=true' -o friendly=false
