@@ -46,6 +46,6 @@ jobs:
                               RETURNS STRING
                               LANGUAGE PYTHON
                               RUNTIME_VERSION = '3.8'
-                              PACKAGES = ('')
+                              PACKAGES = ()
                               IMPORTS = ('@~/${{ github.ref_name }}/t1.py')
                               HANDLER = 't1.run';" -o friendly=false
