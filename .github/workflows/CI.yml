@@ -48,4 +48,4 @@ jobs:
                               RUNTIME_VERSION = '3.8'
                               PACKAGES = ()
                               IMPORTS = ('@~/${{ github.ref_name }}/t1.py')
-                              HANDLER = 't1.run';" -o friendly=false
+                              HANDLER = 't1.hello';" -o friendly=false
