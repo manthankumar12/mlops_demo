@@ -35,15 +35,17 @@ jobs:
         run: |
           curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.9-linux_x86_64.bash
           SNOWSQL_DEST=~/bin SNOWSQL_LOGIN_SHELL=~/.profile bash snowsql-1.2.9-linux_x86_64.bash
+
       - name: Upload artifact to SnowSQL
         run: |
-          ~/bin/snowsql -q 'put file://'$(pwd)'/storedproc.py @~/${{ github.ref_name }} overwrite=true' -o friendly=false
-      - name: Create or update Stored PRocedure
+          ~/bin/snowsql -q 'put file://'$(pwd)'/t1.py @~/${{ github.ref_name }} overwrite=true' -o friendly=false
+
+      - name: Create or update Stored Procedure
         run: |
-          ~/bin/snowsql -q 'CREATE OR REPLACE PROCEDURE  MYPROC(message STRING)
-                                        RETURNS STRING
-                                        LANGUAGE PYTHON
-                                        RUNTIME_VERSION = '\''3.8'\''
-                                        PACKAGES = ('')
-                                        IMPORTS = ('\''@~/${{ github.ref_name }}/storedproc.py'\'')
-                                        HANDLER = '\''storedproc.run'\'';' -o friendly=false
+          ~/bin/snowsql -q "CREATE OR REPLACE PROCEDURE MYPROC(message STRING)
+                              RETURNS STRING
+                              LANGUAGE PYTHON
+                              RUNTIME_VERSION = '3.8'
+                              PACKAGES = ('')
+                              IMPORTS = ('@~/${{ github.ref_name }}/t1.py')
+                              HANDLER = 't1.run';" -o friendly=false
